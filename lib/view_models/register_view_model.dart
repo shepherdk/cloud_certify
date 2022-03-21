@@ -21,6 +21,7 @@ class RegisterViewModel with ChangeNotifier {
       required String emailAddress,
       required String mobileNumber,
       required String userName,
+      required String password,
       required BuildContext context}) async {
     setLoading(true);
 
@@ -29,13 +30,12 @@ class RegisterViewModel with ChangeNotifier {
     RegisterService regService = RegisterService();
     await regService
         .signup(RegisterRequestModel(
-      name: name,
-      surname: surname,
-      emailAddress: emailAddress,
-      mobileNumber: mobileNumber,
-      userName: userName,
-      roleId: 2,
-    ))
+            name: name,
+            surname: surname,
+            emailAddress: emailAddress,
+            mobileNumber: mobileNumber,
+            userName: userName,
+            password: password))
         .then((value) {
       var status_code = value["statusCode"];
 
@@ -44,7 +44,7 @@ class RegisterViewModel with ChangeNotifier {
 
         print(responseModel.toString());
 
-        displayNotice('Success! Credentials sent to: $emailAddress', context,
+        displayNotice('Successfully created account, please sign in', context,
             color: Colors.black87);
 
         Future.delayed(Duration(seconds: 2)).then((value) {

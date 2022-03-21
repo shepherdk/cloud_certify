@@ -1,3 +1,4 @@
+import 'package:cloud_certify/pages/upload_to_certify/submit_success/submission_success.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_certify/view_models/certify_view_model.dart';
 import 'package:flutter/material.dart';

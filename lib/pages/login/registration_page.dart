@@ -26,11 +26,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _surnameController = TextEditingController();
   TextEditingController _userNameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
   //Focus Nodes
   final _emailAddressFocusNode = FocusNode();
   final _mobileNumberFocusNode = FocusNode();
   final _nameFocusNode = FocusNode();
   final _surnameFocusNode = FocusNode();
+  final _passwordFocusNode = FocusNode();
   final _userNameFocusNode = FocusNode();
 
   @override
@@ -98,8 +101,24 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 TextStyle(fontSize: 24.0, color: Colors.black),
                           ),
                         ),
+                        SizedBox(height: 20.0),
+                        Container(
+                          child: TextFormField(
+                            controller: _userNameController,
+                            focusNode: _userNameFocusNode,
+                            decoration: ThemeHelper().textInputDecoration(
+                                "Username", "Choose a username"),
+                            validator: (val) {
+                              if (val!.isEmpty) {
+                                return "Please enter a username";
+                              }
+                              return null;
+                            },
+                          ),
+                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
+                        ),
                         SizedBox(
-                          height: 30,
+                          height: 20,
                         ),
                         Container(
                           child: TextFormField(
@@ -169,22 +188,25 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
-                        // SizedBox(height: 20.0),
-                        // Container(
-                        //   child: TextFormField(
-                        //     controller: _userNameController,
-                        //     focusNode: _userNameFocusNode,
-                        //     decoration: ThemeHelper().textInputDecoration(
-                        //         "Username", "Choose a username"),
-                        //     validator: (val) {
-                        //       if (val!.isEmpty) {
-                        //         return "Please enter a username";
-                        //       }
-                        //       return null;
-                        //     },
-                        //   ),
-                        //   decoration: ThemeHelper().inputBoxDecorationShaddow(),
-                        // ),
+                        SizedBox(height: 20.0),
+                        Container(
+                          child: TextFormField(
+                            controller: _passwordController,
+                            focusNode: _passwordFocusNode,
+                            obscureText: true,
+                            decoration: ThemeHelper().textInputDecoration(
+                                'Password', 'Enter your password'),
+                            validator: (val) {
+                              if (val!.isEmpty) {
+                                return "Please enter your password";
+                              }
+                              return null;
+                            },
+                          ),
+                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
+                        ),
+                        SizedBox(height: 15.0),
+
                         SizedBox(height: 15.0),
                         FormField<bool>(
                           builder: (state) {
@@ -258,13 +280,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                       await context
                                           .read<RegisterViewModel>()
                                           .regUser(
+                                              password:
+                                                  _passwordController.text,
                                               name: _nameController.text,
                                               surname: _surnameController.text,
                                               emailAddress:
                                                   _emailAddressController.text,
                                               mobileNumber:
                                                   _mobileNumberController.text,
-                                              userName: _nameController.text
+                                              userName: _userNameController.text
                                                   .toLowerCase(),
                                               context: context)
                                           .then((value) => print(

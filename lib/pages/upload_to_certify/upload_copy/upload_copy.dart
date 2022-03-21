@@ -238,7 +238,7 @@ class _UploadCopyState extends State<UploadCopy> {
     setState(() {
       setStatus('Uploading File...');
     });
-    String apiUploadFile = apiBaseUrlOath + 'file/upload/';
+    String apiUploadFile = apiBaseUrlOath + 'file/upload';
     File selectedFile = File(_paths!.first.path!);
     var request = http.MultipartRequest(
       'POST',

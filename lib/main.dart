@@ -1,7 +1,10 @@
 import 'package:cloud_certify/core/auth_manager.dart';
 import 'package:cloud_certify/view_models/certify_view_model.dart';
 import 'package:cloud_certify/view_models/create_profile_view_model.dart';
+import 'package:cloud_certify/view_models/doc_type_viewmodel.dart';
+import 'package:cloud_certify/view_models/forgot_password_view_model.dart';
 import 'package:cloud_certify/view_models/login_view_model.dart';
+import 'package:cloud_certify/view_models/pay_viewmodel.dart';
 import 'package:cloud_certify/view_models/register_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +21,9 @@ void main() {
       ChangeNotifierProvider(create: (context) => CreateProfileViewModel()),
       ChangeNotifierProvider(create: (context) => CertifyViewModel()),
       ChangeNotifierProvider(create: (context) => AuthManager()),
+      ChangeNotifierProvider(create: (context) => ForgotPasswordViewModel()),
+      ChangeNotifierProvider(create: (context) => DocTypeViewModel()),
+      ChangeNotifierProvider(create: (context) => PayViewModel()),
     ],
     child: LoginUiApp(),
   ));

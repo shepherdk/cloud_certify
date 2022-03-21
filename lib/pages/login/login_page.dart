@@ -91,7 +91,27 @@ class _LoginPageState extends State<LoginPage> {
                                 decoration:
                                     ThemeHelper().inputBoxDecorationShaddow(),
                               ),
-                              SizedBox(height: 32.0),
+                              SizedBox(height: 15.0),
+                              Container(
+                                margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
+                                alignment: Alignment.topRight,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ForgotPasswordPage()),
+                                    );
+                                  },
+                                  child: Text(
+                                    "Forgot your password?",
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ),
                               isLoading
                                   ? Padding(
                                       padding: const EdgeInsets.symmetric(

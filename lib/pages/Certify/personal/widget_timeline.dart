@@ -1,9 +1,11 @@
+import 'package:cloud_certify/pages/upload_to_certify/select_certificate_type/select_document_type.dart';
+import 'package:cloud_certify/pages/upload_to_certify/upload_to_certify_screen.dart';
+import 'package:cloud_certify/view_models/doc_type_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_certify/pages/common/my_colors.dart';
 import 'package:cloud_certify/pages/common/my_font_size.dart';
 import 'package:cloud_certify/pages/common/my_style.dart';
 import 'package:cloud_certify/pages/widgets/custom_card.dart';
-import 'package:cloud_certify/pages/Certify/personal/certify_menu.dart';
 
 class WidgetTimeline extends StatefulWidget {
   final IconData? icon;
@@ -72,13 +74,12 @@ class _WidgetTimelineState extends State<WidgetTimeline> {
               SizedBox(height: 20),
               if (widget.showCard!)
                 CustomCard(
-                    onTap: () {},
-                    // onTap: () {
-                    //   Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //           builder: (context) => CertifyMenu()));
-                    // },
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SelectCertificateType()));
+                    },
                     shadow: true,
                     bgColor: MyColors.softGrey,
                     borderRadius: BorderRadius.circular(15),

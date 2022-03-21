@@ -36,13 +36,13 @@ class _TrackingShipmentState extends State<TrackingShipment> {
           WidgetTimelineWrapper(),
           WidgetTimelineWrapper2(),
           WidgetTimelineWrapper3(),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => UploadToCertify()));
-            },
-            child: Text('Upload Docs'),
-          )
+          // ElevatedButton(
+          //   onPressed: () {
+          //     Navigator.push(context,
+          //         MaterialPageRoute(builder: (context) => UploadToCertify()));
+          //   },
+          //   child: Text('Upload Docs'),
+          // )
         ],
       ),
     );

@@ -1,3 +1,5 @@
+import 'package:cloud_certify/pages/upload_to_certify/select_certificate_type/select_document_type.dart';
+import 'package:cloud_certify/pages/upload_to_certify/upload_to_certify_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_certify/pages/common/my_colors.dart';
 import 'package:cloud_certify/pages/common/my_font_size.dart';
@@ -72,13 +74,12 @@ class _WidgetTimeline3State extends State<WidgetTimeline3> {
               SizedBox(height: 20),
               if (widget.showCard!)
                 CustomCard(
-                    onTap: () {},
-                    // onTap: () {
-                    //   Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //           builder: (context) => CertifyMenu()));
-                    // },
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SelectCertificateType()));
+                    },
                     shadow: true,
                     bgColor: MyColors.softGrey,
                     borderRadius: BorderRadius.circular(15),

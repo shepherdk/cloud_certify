@@ -99,7 +99,7 @@ class _UploadOriginalState extends State<UploadOriginal> {
     setState(() {
       setStatus('Uploading Image...');
     });
-    String apiUploadFile = apiBaseUrlOath + 'file/upload/';
+    String apiUploadFile = apiBaseUrlOath + 'file/upload';
     var request = http.MultipartRequest(
       'POST',
       Uri.parse(apiUploadFile),

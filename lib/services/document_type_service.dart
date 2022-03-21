@@ -1,31 +1,21 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:cloud_certify/core/auth_manager.dart';
-import 'package:cloud_certify/core/cache_manager.dart';
 import 'package:cloud_certify/helpers/constants.dart';
 import 'package:cloud_certify/helpers/custom_exceptions.dart';
-import 'package:cloud_certify/models/certify_request_model.dart';
-import 'package:cloud_certify/models/login_request_model.dart';
 import 'package:http/http.dart' as http;
+//certificate type
 
-class CertifyService {
-  // final String certifyUrl = apiBaseUrlOath + 'certify/add';
+class DocumentTypeService {
+  final String docUrl = apiBaseUrlOath + 'doc-type/get/all';
 
-  Future<dynamic> certfiy(
-      {required CertifyRequestModel model,
-      required int docTypeId,
-      required int profileId}) async {
-    final String certifyUrl = apiBaseUrlOath +
-        'certify/add' +
-        '?docTypeId=${docTypeId.toString()}&profileId=${profileId.toString()}';
-    print("Calling API: $certifyUrl");
-    print("Calling parameters: ${model.fileId}");
+  Future<dynamic> fetchAll() async {
+    print("Calling API: $docUrl");
+    print("Calling parameters: none");
 
     var responseJson;
     try {
-      final response = await http.post(
-        Uri.parse(certifyUrl),
-        body: jsonEncode(model.toJson()),
+      final response = await http.get(
+        Uri.parse(docUrl),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'
         },
@@ -36,7 +26,7 @@ class CertifyService {
       print('No network connection');
       throw FetchDataException('No Internet connection');
     }
-    print('.......ending certify service');
+    print('.......ending doc type service');
     return responseJson;
   }
 }

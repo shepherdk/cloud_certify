@@ -12,6 +12,7 @@ import 'package:cloud_certify/models/certify_response_model.dart';
 import 'package:cloud_certify/pages/upload_to_certify/submit_success/submission_success.dart';
 import 'package:cloud_certify/services/certify_service.dart';
 import 'package:cloud_certify/view_models/create_profile_view_model.dart';
+import 'package:cloud_certify/view_models/doc_type_viewmodel.dart';
 import 'package:cloud_certify/view_models/login_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,20 +48,24 @@ class CertifyViewModel with ChangeNotifier {
   Future<void> certifySubmit(
       {required String receiptMethod, required BuildContext context}) async {
     setLoading(true);
+    print('Step 0');
 
-    var profileId = context.read<CreateProfileViewModel>().profileDetails.id;
-
+    var _profileId = context.read<CreateProfileViewModel>().profileDetails.id;
+    var _docTypeId = context.read<DocTypeViewModel>().selectedDocId;
+    print('Step 1 $_profileId $_docTypeId');
     await CertifyService()
-        .certfiy((CertifyRequestModel(
-            profileId: profileId,
-            fileId: originalFileId,
-            fileType: 'CERTIFICATES',
-            paymentMethod: 'ECOCASH',
-            receiptMethod: receiptMethod)))
+        .certfiy(
+            model: (CertifyRequestModel(
+                fileId:
+                    originalFileId, //,'e0c13b96-b5bc-43ff-b306-963e13b24a73'
+                paymentMethod: 'ECOCASH',
+                receiptMethod: receiptMethod)), // 'WHATSAPP'
+            profileId: _profileId,
+            docTypeId: _docTypeId)
         //then wha??
         .then((value) {
       var status_code = value["statusCode"];
-
+      print(status_code);
       if (status_code == 200) {
         var responseModel =
             CertifyResponseModel.fromJson(value["responseBody"]);

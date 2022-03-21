@@ -1,22 +1,20 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:cloud_certify/helpers/constants.dart';
 import 'package:cloud_certify/helpers/custom_exceptions.dart';
-import 'package:cloud_certify/models/register_request_model.dart';
 
-class RegisterService {
-  final String registerUrl = apiBaseUrlUser + 'users/signUp?roleId=2';
+class PayService {
+// const String apiBaseUrlOath = 'http://3.237.190.233:8092/api/v1/payment?certificationId=17';
 
-  Future<dynamic> signup(RegisterRequestModel model) async {
-    print("Calling API: $registerUrl");
-    print("Calling parameters: ${model.userName}");
+  Future<dynamic> pay({required certId}) async {
+    final String payUrl = apiBaseUrlOath + 'payment?certificationId=$certId';
+    print("Calling API: $payUrl");
+    print("Calling parameters: $certId");
 
     var responseJson;
     try {
       final response = await http.post(
-        Uri.parse(registerUrl),
-        body: jsonEncode(model.toJson()),
+        Uri.parse(payUrl),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'
         },
@@ -24,21 +22,21 @@ class RegisterService {
 
       responseJson = _generateResponse(response);
 
-      print('sign up request completed!!!');
+      print('payment  request completed!!!');
     } on SocketException {
       print('No network connection');
       throw FetchDataException('No Internet connection');
     }
-    print('.....ending register service');
+    print('.....ending payment service');
     return responseJson;
   }
 
   dynamic _generateResponse(http.Response response) {
     switch (response.statusCode) {
       case 200:
-        var responseJson = jsonDecode(response.body);
-        http.MultipartRequest;
-        return responseJson;
+        //var responseJson = jsonDecode(response.body);
+
+        return response;
       case 400:
         throw BadRequestException(response.body.toString());
       case 401:

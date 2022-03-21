@@ -1,8 +1,10 @@
+import 'package:cloud_certify/models/forgot_password_request_model.dart';
+import 'package:cloud_certify/view_models/forgot_password_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_certify/pages/widgets/theme_helper.dart';
-
+import 'package:provider/provider.dart';
 import 'forgot_password_verification_page.dart';
 import 'login_page.dart';
 import 'package:cloud_certify/pages/widgets/header_widget.dart';
@@ -16,10 +18,17 @@ class ForgotPasswordPage extends StatefulWidget {
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _emailAddressController = TextEditingController();
+
+  final _emailAddressFocusNode = FocusNode();
+
+  final _passwordFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
     double _headerHeight = 300;
+    bool isLoading = context.watch<ForgotPasswordViewModel>().isLoading;
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -54,14 +63,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             SizedBox(
                               height: 10,
                             ),
-                            Text(
-                              'Enter the email address associated with your account.',
-                              style: TextStyle(
-                                  // fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black54),
-                              // textAlign: TextAlign.center,
-                            ),
+                            // Text(
+                            //   'Enter the email address associated with your account.',
+                            //   style: TextStyle(
+                            //       // fontSize: 20,
+                            //       fontWeight: FontWeight.bold,
+                            //       color: Colors.black54),
+                            //   // textAlign: TextAlign.center,
+                            // ),
                             SizedBox(
                               height: 10,
                             ),
@@ -76,15 +85,17 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 40.0),
+                      SizedBox(height: 20.0),
                       Form(
                         key: _formKey,
                         child: Column(
                           children: <Widget>[
                             Container(
                               child: TextFormField(
+                                controller: _emailAddressController,
+                                focusNode: _emailAddressFocusNode,
                                 decoration: ThemeHelper().textInputDecoration(
-                                    "Email", "Enter your email"),
+                                    "Account Email", "Enter your email"),
                                 validator: (val) {
                                   if (val!.isEmpty) {
                                     return "Email can't be empty";
@@ -99,36 +110,63 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                               decoration:
                                   ThemeHelper().inputBoxDecorationShaddow(),
                             ),
-                            SizedBox(height: 40.0),
+                            SizedBox(height: 20.0),
                             Container(
-                              decoration:
-                                  ThemeHelper().buttonBoxDecoration(context),
-                              child: ElevatedButton(
-                                style: ThemeHelper().buttonStyle(),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                                  child: Text(
-                                    "Send".toUpperCase(),
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ForgotPasswordVerificationPage()),
-                                    );
+                              child: TextFormField(
+                                controller: _passwordController,
+                                focusNode: _passwordFocusNode,
+                                obscureText: true,
+                                decoration: ThemeHelper().textInputDecoration(
+                                    'Password', 'Enter your new password'),
+                                validator: (val) {
+                                  if (val!.isEmpty) {
+                                    return "Please enter your password";
                                   }
+                                  return null;
                                 },
                               ),
+                              decoration:
+                                  ThemeHelper().inputBoxDecorationShaddow(),
                             ),
+                            SizedBox(height: 20.0),
+                            isLoading
+                                ? Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 40),
+                                    child: CircularProgressIndicator(
+                                        color: Colors.black),
+                                  )
+                                : Container(
+                                    decoration: ThemeHelper()
+                                        .buttonBoxDecoration(context),
+                                    child: ElevatedButton(
+                                      style: ThemeHelper().buttonStyle(),
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            40, 10, 40, 10),
+                                        child: Text(
+                                          "Send".toUpperCase(),
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      onPressed: () async {
+                                        if (_formKey.currentState!.validate()) {
+                                          await context
+                                              .read<ForgotPasswordViewModel>()
+                                              .reset(
+                                                  email: _emailAddressController
+                                                      .text,
+                                                  password:
+                                                      _passwordController.text,
+                                                  context: context);
+                                        }
+                                      },
+                                    ),
+                                  ),
                             SizedBox(height: 30.0),
                             Text.rich(
                               TextSpan(
@@ -151,6 +189,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 ],
                               ),
                             ),
+                            SizedBox(height: 16.0),
                           ],
                         ),
                       )

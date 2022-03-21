@@ -1,3 +1,3 @@
-const String apiBaseUrlUser = 'http://44.199.192.177:8091/api/v1/';
+const String apiBaseUrlUser = 'http://3.237.190.233:8091/api/v1/';
 
-const String apiBaseUrlOath = 'http://44.199.192.177:8092/api/v1/';
+const String apiBaseUrlOath = 'http://3.237.190.233:8092/api/v1/';
